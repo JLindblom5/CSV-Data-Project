@@ -1,6 +1,7 @@
 with open ("CoromonDataset.csv", "r") as file:
     header = file.readline().split(",")
     stats = file.readlines()
+    # Creating lists and dictionary's to store the data
     coromon_names = []
     coromon_types = []
     coromon_health_points = []
@@ -14,11 +15,12 @@ with open ("CoromonDataset.csv", "r") as file:
     type_counts = {}
 
     for items in stats:
+        # Organizing data into lists with related data having the same index
         stats_split = items.split(",")
         coromon_names.append(stats_split[0])
         coromon_types.append(stats_split[1])
         coromon_health_points.append(stats_split[2])
-        coromon_attack.append(stats_split[3])
+        coromon_attack.append(stats_split[3])                    
         coromon_special_attack.append(stats_split[4])
         coromon_defense.append(stats_split[5])
         coromon_special_defense.append(stats_split[6])
@@ -27,6 +29,7 @@ with open ("CoromonDataset.csv", "r") as file:
     stamina_points_without_newline = [point.strip() for point in header]
 
     for nums in range(len(coromon_types)):
+        # Getting the Coromon's type and all of the statistics for each Coromon
         current_type = coromon_types[nums]
         health_points_val = int(coromon_health_points[nums])
         attack_val = int(coromon_attack[nums])
@@ -37,6 +40,8 @@ with open ("CoromonDataset.csv", "r") as file:
         stamina_points_val = int(coromon_stamina_points[nums])
 
         if current_type in type_totals:
+            # Organizing data into dictionary's with the type of Coromon being the key, and the values being the sum of each statistic
+            # of the same Coromon type combined
             type_totals[current_type][0] += health_points_val
             type_totals[current_type][1] += attack_val
             type_totals[current_type][2] += special_attack_val
@@ -48,11 +53,15 @@ with open ("CoromonDataset.csv", "r") as file:
         else:
             type_totals[current_type] = [health_points_val, attack_val, special_attack_val, defense_val, special_defense_val, speed_val, stamina_points_val]
             type_counts[current_type] = 1
+            # Counting the amount of each Coromon type
 
     def num_of_coromon():
+        # Shows the number of Coromon that exist
         print(len(coromon_types),"coromon exist")
 
     def random_coromon(random):
+        # Takes the users input which is the Coromon's name, gets the index of the Coromon from the coromon_names list,
+        # and uses that index to get each statistic of that specific Coromon from every list
         coromon_index= coromon_names.index(random)
         print(header[0],":",coromon_names[coromon_index])
         print(header[1],":",coromon_types[coromon_index])
@@ -65,6 +74,7 @@ with open ("CoromonDataset.csv", "r") as file:
         print(stamina_points_without_newline[8],":",coromon_stamina_points[coromon_index])
         
     def types_coromon():
+        # Prints all of the Coromon type's
         a=[]
         for items in coromon_types:
             if items not in a:
@@ -74,6 +84,7 @@ with open ("CoromonDataset.csv", "r") as file:
     
 
     def average_value():
+        # Prints the average statistics for each Coromon type
         print("Average stats for each Coromon type:")
         for coromon_type, total in type_totals.items():
             count = type_counts[coromon_type]
@@ -88,6 +99,7 @@ with open ("CoromonDataset.csv", "r") as file:
             print("Stamina Points:", average[6])
 
     def health_points():
+        # Prints the Coromon type with the highest average health points, or the Coromon with the lowest average health points
         health_list= []
         type_list = []
         for coromon_type, total in type_totals.items():
@@ -103,6 +115,7 @@ with open ("CoromonDataset.csv", "r") as file:
             print(f"Coromon type {type_list[b]} has an average of {min(health_list)} health points, which is the lowest average of all types.")
 
     def attack_points():
+        # Prints the Coromon type with the highest average attack points, or the Coromon with the lowest average attack points
         attack_points_list = []
         type_list = []
         for coromon_type, total in type_totals.items():
@@ -118,6 +131,7 @@ with open ("CoromonDataset.csv", "r") as file:
             print(f"Coromon type {type_list[b]} has an average of {min(attack_points_list)} attack points, which is the lowest average of all types.")
 
     def special_attack_points():
+        # Prints the Coromon type with the highest average special attack points, or the Coromon with the lowest average special attack points
         special_attack_points_list = []
         type_list = []
         for coromon_type, total in type_totals.items():
@@ -133,6 +147,7 @@ with open ("CoromonDataset.csv", "r") as file:
             print(f"Coromon type {type_list[b]} has an average of {min(special_attack_points_list)} special attack points, which is the lowest average of all types.")
 
     def defense_points():
+        # Prints the Coromon type with the highest average defense points, or the Coromon with the lowest average defense points
         defense_points_list = []
         type_list = []
         for coromon_type, total in type_totals.items():
@@ -148,6 +163,7 @@ with open ("CoromonDataset.csv", "r") as file:
             print(f"Coromon type {type_list[b]} has an average of {min(defense_points_list)} defense points, which is the lowest average of all types.")
 
     def special_defense_points():
+        # Prints the Coromon type with the highest average special defense points, or the Coromon with the lowest average special defense points
         special_defense_points_list = []
         type_list = []
         for coromon_type, total in type_totals.items():
@@ -163,6 +179,7 @@ with open ("CoromonDataset.csv", "r") as file:
             print(f"Coromon type {type_list[b]} has an average of {min(special_defense_points_list)} special defense points, which is the lowest average of all types.")
 
     def speed_points():
+        # Prints the Coromon type with the highest average speed points, or the Coromon with the lowest average speed points
         speed_points_list = []
         type_list = []
         for coromon_type, total in type_totals.items():
@@ -176,7 +193,8 @@ with open ("CoromonDataset.csv", "r") as file:
             print(f"Coromon type {type_list[a]} has an average of {max(speed_points_list)} speed points, which is the highest average of all types.")
         elif letter_chosen == "P":
             print(f"Coromon type {type_list[b]} has an average of {min(speed_points_list)} speed points, which is the lowest average of all types.")
-  
+
+    # Asking the user to enter a letter to see the information they want
     print("Enter the letter corresponded with the information to see the information:")
     print("A. Number of Coromons that exist")
     print("B. Displays a Coromons information of your choice ")
@@ -196,7 +214,8 @@ with open ("CoromonDataset.csv", "r") as file:
     print("P. Coromon type with the lowest average speed points")
     letter_chosen= input("- Choose a letter: ").upper()
     print("--------------------------------------------------------------------")
-    
+
+    # Calling the function that matches what the user wants to see
     if letter_chosen== "A":
         num_of_coromon()
 
